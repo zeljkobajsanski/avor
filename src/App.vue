@@ -73,7 +73,10 @@ export default class App extends Vue {
   }
 
   .date-header p {
-    transform: translateY(50%);
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%)
   }
 
   .group-header {
@@ -82,16 +85,39 @@ export default class App extends Vue {
   }
 
   .group-header p {
-    transform: rotate(-90deg);
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-90deg);
+  }
+
+  @media (min-width: 3840px) and (max-width: 7680px) {
+    .item {
+      width: 600px;
+      height: 400px;
+      margin: 15px;
+    }
+  }
+
+  @media (min-width: 1920px) and (max-width: 3840px) {
+    .item {
+      width: 300px;
+      height: 200px;
+      margin: 10px;
+    }
+  }
+
+  @media (min-width: 1024px) and (max-width: 1920px) {
+    .item {
+      width: 150px;
+      height: 100px;
+      margin: 5px;
+    }
   }
 
   .item {
-    /*width: 10vw;
-    height: 7vw;*/
-    width: 200px;
-    height: 150px;
     border: 1px solid black;
-    margin: 5px;
+
   }
 
   .item-placeholder {
