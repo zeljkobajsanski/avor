@@ -1,46 +1,101 @@
 <template>
   <div id="app">
-    <div class="outer-grid">
-      <div v-for="(date, ix) in goodDates" :style="{'grid-row': 1, 'grid-column': ix + 2}" class="date-header"><p>
-        {{date}}</p></div>
-      <div v-for="(group, ix1) in groups" :style="{'grid-column': 1, 'grid-row': ix1 + 2}" class="group-header"><p>
-        {{group}}</p></div>
-      <div v-for="p in itemPlaceholders" :style="{'grid-row': p.row, 'grid-column': p.column}" class="item-placeholder">
-        <div v-for="item in getItems(p)" class="item"></div>
+    <div class="outer-grid" :style="gridStyles">
+      <!--  HEADER-->
+      <!--  Header for good orders-->
+      <div v-for="(date, ix) in datesForGood" :style="{'grid-row': 1, 'grid-column': ix + 2}"
+           class="grid-columns-header">
+        <p>
+          {{date}}
+        </p>
       </div>
+      <!--  SPLITTER -->
+      <div v-if="view === 2" class="splitter"></div>
+
+      <!--  Header for good orders-->
+      <div v-for="(date, ix) in datesForBad" :style="{'grid-row': 1, 'grid-column': ix + 3 + 2}"
+           class="grid-columns-header">
+        <p>
+          {{date}}
+        </p>
+      </div>
+      <!--  ./HEADER-->
+      <!--  ROWS-HEADER-->
+      <div v-for="(group, ix1) in groups" :style="{'grid-column': 1, 'grid-row': ix1 + 2}" class="group-header">
+        <p>
+          {{group}}
+        </p>
+      </div>
+      <!--  ./ROWS-HEADER-->
+
+      <!--      CELLS-->
+      <Cell v-for="cell in cells" :row="cell.row" :column="cell.column">
+        <Card v-for="item in cellContent(cell.rowObject, cell.columnObject)" :data="item"></Card>
+      </Cell>
+      <!--    ./CELLS-->
+
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import {matrix} from "@/utils/extensions";
+import Cell from "@/components/Cell.vue";
+import Card from "@/components/Card.vue";
+import * as _ from 'lodash';
 
 @Component({
   components: {
+    Cell, Card
   },
 })
 export default class App extends Vue {
-  goodDates = ['2019-09-03', '2019-09-02', '2019-09-01', '2019-08-31', '2019-08-30'];
-  groups = ['PG1', 'PG2', 'PG3', 'PG4'];
-  items = [{g: 1, d: 1}, {g: 1, d: 1}, {g: 1, d: 1}, {g: 2, d: 1}, {g: 2, d: 3}, {g: 2, d: 3}, {g: 2, d: 3}, {
-    g: 2,
-    d: 3
-  }, {g: 2, d: 3}, {g: 2, d: 3}];
+  groups = ['PG-1', 'PG-2', 'PG-3', 'PG-4', 'PG-5'];
+  items = [
+    {type: 'good', group: 'PG-1', date: '2019-09-03'},
+    {type: 'good', group: 'PG-1', date: '2019-09-03'},
+    {type: 'good', group: 'PG-2', date: '2019-09-02'},
+    {type: 'bad', group: 'PG-3', date: '2019-09-02'},
+    {type: 'bad', group: 'PG-4', date: '2019-09-04'},
+  ];
+  view = 2;
+  dates = ['2019-09-04', '2019-09-03', '2019-09-02', '2019-09-01', '2019-08-31'];
 
-  get itemPlaceholders() {
-    const p: any[] = [];
-    this.groups.forEach((group, ix) => {
-      this.goodDates.forEach((date, ix1) => {
-        p.push({row: ix + 2, column: ix1 + 2, group: group, date: date});
-      });
-    });
-
-    return p;
+  get datesForGood() {
+    switch (this.view) {
+      case 1:
+        return [];
+      case 2:
+        return _.take(this.dates, 2);
+      case 3:
+        return _.take(this.dates, 5);
+    }
   }
 
-  getItems(placeholder: any) {
-    return this.items.filter(i => i.g === placeholder.row - 1 && i.d === placeholder.column - 1);
+  get datesForBad() {
+    switch (this.view) {
+      case 3:
+        return [];
+      case 2:
+        return _.take(this.dates, 2);
+      case 1:
+        return _.take(this.dates, 5);
+    }
   }
+
+  get cells() {
+    return matrix(this.groups, this.datesForGood);
+  }
+
+  cellContent(rowObject: string, columnObject: string) {
+    return this.items.filter(item => item.group === rowObject && item.date === columnObject)
+  }
+
+  gridStyles = {
+    'grid-template-columns': `100px 1fr 1fr ${this.view === 2 ? '2px' : '1fr'} 1fr 1fr`,
+    'grid-template-rows': `50px repeat(${this.groups.length}, 1fr)`
+  };
 }
 </script>
 
@@ -55,12 +110,11 @@ export default class App extends Vue {
 
   .outer-grid {
     display: grid;
-    grid-template-columns: 100px 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 50px repeat(4, 1fr);
+
     grid-gap: 0;
   }
 
-  .date-header {
+  .grid-columns-header {
     justify-self: stretch;
     text-align: center;
     border-top: 1px solid #dfdfdf;
@@ -68,7 +122,7 @@ export default class App extends Vue {
     /*transform: translate(0, 25%);*/
   }
 
-  .date-header:first-child {
+  .grid-columns-header:first-child {
     border-left: 1px solid #dfdfdf;
   }
 
@@ -127,5 +181,14 @@ export default class App extends Vue {
     border-right: 1px solid #dfdfdf;
     align-content: start;
 
+  }
+
+  .splitter {
+    height: 100%;
+    width: 2px;
+    background-color: black;
+    grid-column: 4;
+    grid-row-start: 1;
+    grid-row-end: -1;
   }
 </style>
