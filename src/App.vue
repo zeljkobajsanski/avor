@@ -12,8 +12,8 @@
       <!--  SPLITTER -->
       <div v-if="view === 2" class="splitter"></div>
 
-      <!--  Header for good orders-->
-      <div v-for="(date, ix) in datesForBad" :style="{'grid-row': 1, 'grid-column': ix + 3 + 2}"
+        <!--  Header for bad orders-->
+        <div v-for="(date, ix) in datesForBad" :style="{'grid-row': 1, 'grid-column': ix + offest + 2}"
            class="grid-columns-header">
         <p>
           {{date}}
@@ -29,9 +29,13 @@
       <!--  ./ROWS-HEADER-->
 
       <!--      CELLS-->
-      <Cell v-for="cell in cells" :row="cell.row" :column="cell.column">
-        <Card v-for="item in cellContent(cell.rowObject, cell.columnObject)" :data="item"></Card>
+        <Cell v-for="cell in cellsForGoodOrders" :row="cell.row" :column="cell.column">
+            <Card v-for="item in cellContent('good', cell.rowObject, cell.columnObject)" :data="item"></Card>
       </Cell>
+
+        <Cell v-for="cell in cellsForBadOrders" :row="cell.row" :column="cell.column + offest">
+            <Card v-for="item in cellContent('bad', cell.rowObject, cell.columnObject)" :data="item"></Card>
+        </Cell>
       <!--    ./CELLS-->
 
     </div>
@@ -55,8 +59,8 @@ export default class App extends Vue {
   items = [
     {type: 'good', group: 'PG-1', date: '2019-09-03'},
     {type: 'good', group: 'PG-1', date: '2019-09-03'},
-    {type: 'good', group: 'PG-2', date: '2019-09-02'},
-    {type: 'bad', group: 'PG-3', date: '2019-09-02'},
+      {type: 'good', group: 'PG-2', date: '2019-09-04'},
+      {type: 'bad', group: 'PG-3', date: '2019-09-03'},
     {type: 'bad', group: 'PG-4', date: '2019-09-04'},
   ];
   view = 2;
@@ -84,13 +88,21 @@ export default class App extends Vue {
     }
   }
 
-  get cells() {
+    get cellsForGoodOrders() {
     return matrix(this.groups, this.datesForGood);
   }
 
-  cellContent(rowObject: string, columnObject: string) {
-    return this.items.filter(item => item.group === rowObject && item.date === columnObject)
-  }
+    get cellsForBadOrders() {
+        return matrix(this.groups, this.datesForBad);
+    }
+
+    cellContent(type: string, rowObject: string, columnObject: string) {
+        return this.items.filter(item => item.type === type && item.group === rowObject && item.date === columnObject)
+    }
+
+    get offest() {
+        return this.view === 2 ? 3 : 0;
+    }
 
   gridStyles = {
     'grid-template-columns': `100px 1fr 1fr ${this.view === 2 ? '2px' : '1fr'} 1fr 1fr`,
