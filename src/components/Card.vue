@@ -1,8 +1,18 @@
 <template>
     <div class="card" :style="{'border-left-color': data.type === 'good' ? 'green' : 'red'}">
-        <p>{{data.material}}</p>
-        <p>PO: {{data.orders}}</p>
-        <p>CA: {{data.cartons}}</p>
+        <p class="material">{{data.material}}</p>
+        <table class="table">
+            <tbody>
+            <tr>
+                <td>Orders</td>
+                <td style="text-align: right; font-weight: bold">{{data.orders}}</td>
+            </tr>
+            <tr>
+                <td>Cartons</td>
+                <td style="text-align: right; font-weight: bold">{{data.cartons}}</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </template>
 
@@ -19,7 +29,6 @@
     .card {
         border: 1px solid #dfdfdf;
         border-left-width: 5px;
-        text-align: center;
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
@@ -29,11 +38,16 @@
     }
 
     .card p {
-        border-bottom: 1px solid #dfdfdf;
-        margin: 0 2px;
+        margin: 0 4px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+        text-align: left;
+    }
+
+    p.material {
+        text-align: center;
+        font-weight: bold;
     }
 
     .card p:last-child {
@@ -58,9 +72,10 @@
 
     @media (max-device-width: 1920px) {
         .card {
-            width: 100px;
-            height: 100px;
+            width: 130px;
+            height: 120px;
             margin: 5px;
+            font-size: 10px;
         }
     }
 

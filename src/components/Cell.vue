@@ -37,7 +37,7 @@
         @Prop() row!: number;
         @Prop() column!: number;
         @Prop() items!: any[];
-        readonly ITEMS_PER_PAGE = 3;
+        readonly ITEMS_PER_PAGE = window.screen.width * window.devicePixelRatio <= 2000 ? 2 : 3;
         $carousel: any;
 
         mounted() {
