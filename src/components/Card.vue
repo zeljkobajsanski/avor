@@ -4,11 +4,11 @@
         <table class="table">
             <tbody>
             <tr>
-                <td>Orders</td>
+                <td title="Production Orders"><i class="fa fa-copy"></i></td>
                 <td style="text-align: right; font-weight: bold">{{data.orders}}</td>
             </tr>
             <tr>
-                <td>Cartons</td>
+                <td title="Folding Boxes"><i class="fa fa-cubes"></i></td>
                 <td style="text-align: right; font-weight: bold">{{data.cartons}}</td>
             </tr>
             </tbody>
@@ -32,6 +32,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
+        cursor: pointer;
         /*-webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
         -moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
         box-shadow: 2px 2px 1px 0px rgba(0,0,0,0.75);*/

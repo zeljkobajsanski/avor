@@ -76,7 +76,7 @@
         },
     })
     export default class App extends Vue {
-        groups = ['PG-1', 'PG-2', 'PG-3', 'PG-4', 'PG-5', 'PG-6', 'PG-7', 'PG-8'];
+        groups = ['PG-1', 'PG-2', 'PG-3', 'PG-4', 'PG-5', 'PG-6', 'PG-7', 'PG-8', 'PG-9', 'PG-10'];
         items = [
             {type: 'good', group: 'PG-1', date: '2019-09-04', material: 'TAMIFLU', orders: 15, cartons: 200},
             {type: 'good', group: 'PG-1', date: '2019-09-04', material: 'ANDOL', orders: 15, cartons: 200},
