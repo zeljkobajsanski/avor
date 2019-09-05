@@ -47,7 +47,6 @@
 
         get pages() {
             const numbersOfPages = Math.ceil(this.items.length / this.ITEMS_PER_PAGE);
-            console.log(numbersOfPages);
             const p = _.times(numbersOfPages, (i: number) => ({
                 page: i,
                 active: i === 0,

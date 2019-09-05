@@ -1,5 +1,5 @@
 <template>
-    <div class="card" :style="{'border-left-color': data.type === 'good' ? 'green' : 'red'}">
+    <div class="card" :style="{'border-left-color': data.type === 'good' ? '#64bd63' : '#dd5826'}">
         <p class="material">{{data.material}}</p>
         <table class="table">
             <tbody>
@@ -28,7 +28,7 @@
 <style scoped>
     .card {
         border: 1px solid #dfdfdf;
-        border-left-width: 5px;
+        border-left-width: 8px;
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
@@ -72,7 +72,7 @@
 
     @media (max-device-width: 1920px) {
         .card {
-            width: 130px;
+            width: 120px;
             height: 120px;
             margin: 5px;
             font-size: 10px;

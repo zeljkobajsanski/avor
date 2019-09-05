@@ -185,6 +185,7 @@
 </script>
 
 <style>
+    @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800&display=swap');
     #app {
         padding: 5px;
     }
@@ -250,5 +251,9 @@
         grid-column: 4;
         grid-row-start: 1;
         grid-row-end: -1;
+    }
+
+    p, span, td {
+        font-family: 'Montserrat', sans-serif;
     }
 </style>
