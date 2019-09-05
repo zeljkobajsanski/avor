@@ -1,6 +1,5 @@
 <template>
     <div class="card">
-
     </div>
 </template>
 
@@ -16,6 +15,7 @@
 <style scoped>
     .card {
         border: 1px solid black;
+        /*float: left;*/
     }
 
     @media (min-width: 3840px) and (max-width: 7680px) {
@@ -26,19 +26,21 @@
         }
     }
 
-    @media (min-width: 1920px) and (max-width: 3840px) {
+    @media (min-device-width: 1920px) and (max-width: 3840px) {
         .card {
-            width: 300px;
-            height: 200px;
+            width: 200px;
+            height: 150px;
             margin: 10px;
         }
     }
 
-    @media (min-width: 1024px) and (max-width: 1920px) {
+    @media (max-device-width: 1920px) {
         .card {
-            width: 150px;
+            width: 100px;
             height: 100px;
             margin: 5px;
         }
     }
+
+
 </style>
