@@ -2,20 +2,25 @@
     <div id="app">
         <div class="outer-grid" :style="gridStyles">
             <!--  HEADER-->
-            <div :style="headerStyleGood" v-if="view != 1" class="top-header">
-                <span style="align-self: center">Ready for production</span>
-                <a href="javascript: void(0);" style="align-self: flex-end;" @click="decreaseViewIndex()" class="btn">
-                    <i class="fa fa-caret-left fa-2x"></i>
-                </a>
+            <!--<div :style="headerStyleGood" v-if="view != 1" class="top-header" style="grid-template-columns: 1fr auto; cursor: pointer;">
+                <p class="text-center" @click="increaseViewIndex()">Ready for production</p>
+                <i class="fa fa-caret-left fa-2x" style="margin-right: 10px; color: #dfdfdf" @click="decreaseViewIndex()"></i>
             </div>
-            <div :style="headerStyleBad" v-if="view != 3" class="top-header">
-                <span style="align-self: center">Bad</span>
-                <a href="javascript: void(0);" style="align-self: flex-start;" @click="increaseViewIndex()" class="btn">
-                    <i class="fa fa-caret-right fa-2x"></i>
-                </a>
+            <div :style="headerStyleBad" v-if="view != 3" class="top-header" style="grid-template-columns: auto 1fr; cursor: pointer;">
+                <i class="fa fa-caret-right fa-2x" style="margin-left: 14px; color: #dfdfdf" @click="increaseViewIndex()"></i>
+                <p class="text-center" @click="decreaseViewIndex()">Bad</p>
+            </div>-->
+
+            <div :style="headerStyleGood" v-if="view != 1" style="cursor: pointer; font-weight: bold">
+                <p class="text-center" @click="toggleIncreaseViewIndex()">Ready for production</p>
             </div>
+            <div :style="headerStyleBad" v-if="view != 3" style="cursor: pointer; font-weight: bold">
+                <p class="text-center" @click="toggleDecreaseViewIndex()">Bad</p>
+            </div>
+
             <!--  Header for good orders-->
-            <div v-for="(date, ix) in datesForGood" :style="{'grid-row': 2, 'grid-column': ix + 2}"
+            <div v-for="(date, ix) in datesForGood"
+                 :style="{'grid-row': 2, 'grid-column': ix + 2, 'border-left': ix === 0 ? '1px solid #dfdfdf' : ''}"
                  class="grid-columns-header">
                 <p>
                     {{date}}
@@ -25,7 +30,8 @@
             <div v-if="view === 2" class="splitter"></div>
 
             <!--  Header for bad orders-->
-            <div v-for="(date, ix) in datesForBad" :style="{'grid-row': 2, 'grid-column': ix + offest + 2}"
+            <div v-for="(date, ix) in datesForBad"
+                 :style="{'grid-row': 2, 'grid-column': ix + offest + 2, 'border-left': ix === 0 ? '1px solid #dfdfdf' : ''}"
                  class="grid-columns-header">
                 <p>
                     {{date}}
@@ -72,19 +78,19 @@
     export default class App extends Vue {
         groups = ['PG-1', 'PG-2', 'PG-3', 'PG-4', 'PG-5', 'PG-6', 'PG-7', 'PG-8'];
         items = [
-            {type: 'good', group: 'PG-1', date: '2019-09-04'},
-            {type: 'good', group: 'PG-1', date: '2019-09-04'},
-            {type: 'good', group: 'PG-1', date: '2019-09-04'},
-            {type: 'good', group: 'PG-1', date: '2019-09-04'},
-            {type: 'good', group: 'PG-1', date: '2019-09-04'},
-            {type: 'good', group: 'PG-1', date: '2019-09-04'},
-            {type: 'good', group: 'PG-1', date: '2019-09-04'},
-            {type: 'good', group: 'PG-2', date: '2019-09-03'},
-            {type: 'good', group: 'PG-2', date: '2019-09-03'},
-            {type: 'good', group: 'PG-2', date: '2019-09-03'},
-            {type: 'good', group: 'PG-2', date: '2019-09-03'},
-            {type: 'bad', group: 'PG-3', date: '2019-09-03'},
-            {type: 'bad', group: 'PG-4', date: '2019-09-04'},
+            {type: 'good', group: 'PG-1', date: '2019-09-04', material: 'TAMIFLU', orders: 15, cartons: 200},
+            {type: 'good', group: 'PG-1', date: '2019-09-04', material: 'ANDOL', orders: 15, cartons: 200},
+            {type: 'good', group: 'PG-1', date: '2019-09-04', material: 'PROGESTERON', orders: 15, cartons: 200},
+            {type: 'good', group: 'PG-1', date: '2019-09-04', material: 'BONIVA', orders: 15, cartons: 200},
+            {type: 'good', group: 'PG-1', date: '2019-09-04', material: 'TAMIFLU', orders: 15, cartons: 200},
+            {type: 'good', group: 'PG-1', date: '2019-09-04', material: 'TAMIFLU', orders: 15, cartons: 200},
+            {type: 'good', group: 'PG-1', date: '2019-09-04', material: 'TAMIFLU', orders: 15, cartons: 200},
+            {type: 'good', group: 'PG-2', date: '2019-09-03', material: 'TAMIFLU', orders: 15, cartons: 200},
+            {type: 'good', group: 'PG-2', date: '2019-09-03', material: 'TAMIFLU', orders: 15, cartons: 200},
+            {type: 'good', group: 'PG-2', date: '2019-09-03', material: 'TAMIFLU', orders: 15, cartons: 200},
+            {type: 'good', group: 'PG-2', date: '2019-09-03', material: 'TAMIFLU', orders: 15, cartons: 200},
+            {type: 'bad', group: 'PG-3', date: '2019-09-03', material: 'TAMIFLU', orders: 15, cartons: 200},
+            {type: 'bad', group: 'PG-4', date: '2019-09-04', material: 'TAMIFLU', orders: 15, cartons: 200},
         ];
         view = 2;
         dates = ['2019-09-04', '2019-09-03', '2019-09-02', '2019-09-01', '2019-08-31'];
@@ -131,7 +137,7 @@
         get gridStyles() {
             return {
                 'grid-template-columns': this.view === 2 ? '100px 1fr 1fr 2px 1fr 1fr' : '100px 1fr 1fr 1fr 1fr 1fr',
-                'grid-template-rows': `50px 50px repeat(${this.groups.length}, 1fr)`
+                'grid-template-rows': `50px 25px repeat(${this.groups.length}, 1fr)`
             };
         };
 
@@ -159,6 +165,22 @@
             ++this.view;
         }
 
+        toggleDecreaseViewIndex() {
+            if (this.view === 1) {
+                ++this.view;
+            } else {
+                --this.view;
+            }
+        }
+
+        toggleIncreaseViewIndex() {
+            if (this.view === 3) {
+                --this.view;
+            } else {
+                ++this.view;
+            }
+        }
+
     }
 </script>
 
@@ -177,6 +199,7 @@
         text-align: center;
         border-top: 1px solid #dfdfdf;
         border-right: 1px solid #dfdfdf;
+        background-color: #dfdfdf;
         /*transform: translate(0, 25%);*/
     }
 
@@ -216,15 +239,14 @@
 
     .top-header {
         font-weight: bold;
-        display: flex;
-        flex-flow: column;
-        align-items: stretch;
+        display: grid;
+        align-items: center;
     }
 
     .splitter {
         height: 100%;
-        width: 2px;
-        background-color: black;
+        width: 25px;
+        background-color: #dfdfdf;
         grid-column: 4;
         grid-row-start: 1;
         grid-row-end: -1;
