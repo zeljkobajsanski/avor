@@ -37,12 +37,13 @@
         @Prop() row!: number;
         @Prop() column!: number;
         @Prop() items!: any[];
+        @Prop() maxRows!: number;
         readonly ITEMS_PER_PAGE = window.screen.width * window.devicePixelRatio <= 2000 ? 2 : 3;
         $carousel: any;
 
         mounted() {
             const p = this.pages;
-            this.$carousel = $(this.$refs['carouselExampleControls']).carousel({ride: 'carousel', interval: 0});
+            this.$carousel = $(this.$refs['carouselExampleControls']).carousel({ride: 'carousel', interval: 5000});
         }
 
         get pages() {
@@ -56,7 +57,11 @@
         }
 
         get style() {
-            return {'grid-row': this.row + 2, 'grid-column': this.column + 2};
+            return {
+                'grid-row': this.row + 2,
+                'grid-column': this.column + 2,
+                'border-bottom': this.row === this.maxRows ? '1px solid #dfdfdf' : ''
+            };
         }
 
         prev() {

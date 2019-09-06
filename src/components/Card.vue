@@ -1,8 +1,10 @@
 <template>
     <div class="card" :style="{'border-left-color': data.type === 'good' ? '#64bd63' : '#dd5826'}">
-        <p class="material">{{data.material}}</p>
         <table class="table">
             <tbody>
+            <tr>
+                <td colspan="2" style="text-align: justify; font-weight: bold;">{{data.material}}</td>
+            </tr>
             <tr>
                 <td title="Production Orders"><i class="fa fa-copy"></i></td>
                 <td style="text-align: right; font-weight: bold">{{data.orders}}</td>
@@ -40,14 +42,16 @@
 
     .card p {
         margin: 0 4px;
-        overflow: hidden;
+        /*overflow: hidden;
         white-space: nowrap;
-        text-overflow: ellipsis;
+        text-overflow: ellipsis;*/
+
         text-align: left;
     }
 
     p.material {
-        text-align: center;
+        text-align: justify-all;
+        overflow-wrap: normal;
         font-weight: bold;
     }
 
@@ -66,15 +70,15 @@
     @media (min-device-width: 1920px) and (max-width: 3840px) {
         .card {
             width: 200px;
-            height: 150px;
+            height: 180px;
             margin: 10px;
         }
     }
 
     @media (max-device-width: 1920px) {
         .card {
-            width: 120px;
-            height: 120px;
+            width: 150px;
+            height: 150px;
             margin: 5px;
             font-size: 10px;
         }

@@ -12,10 +12,10 @@
             </div>-->
 
             <div :style="headerStyleGood" v-if="view != 1" style="cursor: pointer; font-weight: bold">
-                <p class="text-center" @click="toggleIncreaseViewIndex()">Ready for production</p>
+                <p class="text-center header-caption" @click="toggleIncreaseViewIndex()">Ready for production</p>
             </div>
             <div :style="headerStyleBad" v-if="view != 3" style="cursor: pointer; font-weight: bold">
-                <p class="text-center" @click="toggleDecreaseViewIndex()">Bad</p>
+                <p class="text-center header-caption" @click="toggleDecreaseViewIndex()">Bad</p>
             </div>
 
             <!--  Header for good orders-->
@@ -50,13 +50,15 @@
             <Cell v-for="cell in cellsForGoodOrders"
                   :row="cell.row + 1"
                   :column="cell.column"
-                  :items="cellContent('good', cell.rowObject, cell.columnObject)">
+                  :items="cellContent('good', cell.rowObject, cell.columnObject)"
+                  :max-rows="groups.length">
             </Cell>
 
             <Cell v-for="cell in cellsForBadOrders"
                   :row="cell.row + 1"
                   :column="cell.column + offest"
-                  :items="cellContent('bad', cell.rowObject, cell.columnObject)">
+                  :items="cellContent('bad', cell.rowObject, cell.columnObject)"
+                  :max-rows="groups.length">
             </Cell>
             <!--    ./CELLS-->
         </div>
@@ -76,21 +78,113 @@
         },
     })
     export default class App extends Vue {
-        groups = ['PG-1', 'PG-2', 'PG-3', 'PG-4', 'PG-5', 'PG-6', 'PG-7', 'PG-8', 'PG-9', 'PG-10'];
+        groups = ['PG-1', 'PG-2', 'PG-3', 'PG-4', 'PG-5', 'PG-6', 'PG-7', 'PG-8'];
         items = [
-            {type: 'good', group: 'PG-1', date: '2019-09-04', material: 'TAMIFLU', orders: 15, cartons: 200},
-            {type: 'good', group: 'PG-1', date: '2019-09-04', material: 'ANDOL', orders: 15, cartons: 200},
-            {type: 'good', group: 'PG-1', date: '2019-09-04', material: 'PROGESTERON', orders: 15, cartons: 200},
-            {type: 'good', group: 'PG-1', date: '2019-09-04', material: 'BONIVA', orders: 15, cartons: 200},
-            {type: 'good', group: 'PG-1', date: '2019-09-04', material: 'TAMIFLU', orders: 15, cartons: 200},
-            {type: 'good', group: 'PG-1', date: '2019-09-04', material: 'TAMIFLU', orders: 15, cartons: 200},
-            {type: 'good', group: 'PG-1', date: '2019-09-04', material: 'TAMIFLU', orders: 15, cartons: 200},
-            {type: 'good', group: 'PG-2', date: '2019-09-03', material: 'TAMIFLU', orders: 15, cartons: 200},
-            {type: 'good', group: 'PG-2', date: '2019-09-03', material: 'TAMIFLU', orders: 15, cartons: 200},
-            {type: 'good', group: 'PG-2', date: '2019-09-03', material: 'TAMIFLU', orders: 15, cartons: 200},
-            {type: 'good', group: 'PG-2', date: '2019-09-03', material: 'TAMIFLU', orders: 15, cartons: 200},
-            {type: 'bad', group: 'PG-3', date: '2019-09-03', material: 'TAMIFLU', orders: 15, cartons: 200},
-            {type: 'bad', group: 'PG-4', date: '2019-09-04', material: 'TAMIFLU', orders: 15, cartons: 200},
+            {
+                type: 'good',
+                group: 'PG-1',
+                date: '2019-09-04',
+                material: 'PEGASYS 180MCG/0.5ML 4ASDA US',
+                orders: 15,
+                cartons: 200,
+                note: 'Customer must be informed'
+            },
+            {
+                type: 'good',
+                group: 'PG-1',
+                date: '2019-09-04',
+                material: 'HERCEPTI 440MG 1VILY IV COPK ZA',
+                orders: 15,
+                cartons: 200
+            },
+            {
+                type: 'good',
+                group: 'PG-1',
+                date: '2019-09-04',
+                material: 'EMICIZUM 150MG/1ML 1VIAL SC NL',
+                orders: 15,
+                cartons: 200
+            },
+            {
+                type: 'good',
+                group: 'PG-1',
+                date: '2019-09-04',
+                material: 'TAMIFLU 75MG 10CAPH FR',
+                orders: 15,
+                cartons: 200
+            },
+            {
+                type: 'good',
+                group: 'PG-1',
+                date: '2019-09-04',
+                material: 'DORMICUM 7.5MG 10TAFI SK',
+                orders: 15,
+                cartons: 200
+            },
+            {
+                type: 'good',
+                group: 'PG-1',
+                date: '2019-09-04',
+                material: 'MABTHERA 1400MG/11.7ML 1VIAL SC GR',
+                orders: 15,
+                cartons: 200
+            },
+            {
+                type: 'good',
+                group: 'PG-1',
+                date: '2019-09-04',
+                material: 'AVASTIN 400MG/16ML 1VIAL PK',
+                orders: 15,
+                cartons: 200
+            },
+            {
+                type: 'good',
+                group: 'PG-2',
+                date: '2019-09-03',
+                material: 'TARCEVA 150MG 30TAFI AT-DE',
+                orders: 15,
+                cartons: 200
+            },
+            {
+                type: 'good',
+                group: 'PG-2',
+                date: '2019-09-03',
+                material: 'ESBRIET 267MG CAPH GB FOC',
+                orders: 15,
+                cartons: 200
+            },
+            {
+                type: 'good',
+                group: 'PG-2',
+                date: '2019-09-03',
+                material: 'KADCYLA 100MG 1VILY IN',
+                orders: 15,
+                cartons: 200
+            },
+            {
+                type: 'good',
+                group: 'PG-2',
+                date: '2019-09-03',
+                material: 'MADOPAR 200/50MG 100 CAPH DK',
+                orders: 15,
+                cartons: 200
+            },
+            {
+                type: 'bad',
+                group: 'PG-3',
+                date: '2019-09-03',
+                material: 'LARIAM 250MG 8TABL FI',
+                orders: 15,
+                cartons: 200
+            },
+            {
+                type: 'bad',
+                group: 'PG-4',
+                date: '2019-09-04',
+                material: 'ROFERONA 3 000 000IU/0.5ML 1ASRG CL',
+                orders: 15,
+                cartons: 200
+            },
         ];
         view = 2;
         dates = ['2019-09-04', '2019-09-03', '2019-09-02', '2019-09-01', '2019-08-31'];
@@ -221,7 +315,12 @@
     }
 
     .group-header p {
-        transform: rotate(270deg);
+        /*transform: rotate(270deg);*/
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%) rotate(270deg);
+        text-align: center;
     }
 
     .item {
@@ -256,4 +355,17 @@
     p, span, td {
         font-family: 'Montserrat', sans-serif;
     }
+
+    .header-caption {
+        opacity: 0.7;
+    }
+
+    .header-caption:hover {
+        opacity: 1;
+    }
+
+    html {
+        height: 100%;
+    }
+
 </style>
